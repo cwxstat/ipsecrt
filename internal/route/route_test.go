@@ -49,3 +49,7 @@ func TestStat(t *testing.T) {
 	r := parseNetStat(out)
 	fmt.Println(r)
 }
+
+func TestDefaultGW(t *testing.T) {
+	fmt.Println(DefaultGW())
+}

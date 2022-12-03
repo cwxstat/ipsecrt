@@ -51,3 +51,16 @@ func NetStat() ([][]string, error) {
 	}
 	return parseNetStat(out), nil
 }
+
+func DefaultGW() string {
+	out, err := NetStat()
+	if err != nil {
+		return ""
+	}
+	for _, v := range out {
+		if v[0] == "default" {
+			return v[1]
+		}
+	}
+	return ""
+}

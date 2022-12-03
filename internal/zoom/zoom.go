@@ -34,6 +34,10 @@ func Read(rel string) string {
 	return string(b)
 }
 
+func ZoomIPs() []string {
+	return zoomIPs()
+}
+
 func zoomIPs() []string {
 	s := Read("Zoom.txt")
 	return strings.Split(s, "\n")
