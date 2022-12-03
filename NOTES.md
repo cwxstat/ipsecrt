@@ -5,6 +5,8 @@ cobra-cli init
 
 cobra-cli add zoomadd
 cobra-cli add zoomdel
+cobra-cli add version
+
 
 
 

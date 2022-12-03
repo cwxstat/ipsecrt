@@ -37,15 +37,15 @@ func Read(rel string) string {
 }
 
 func RouteAdd() ([]string, error) {
-	return routeAdd(ZoomIPs)
+	return routeAdd(ZoomIPs, route.DefaultGW)
 }
 
-func routeAdd(f func() []string) ([]string, error) {
+func routeAdd(f func() []string, fgw func() string) ([]string, error) {
 	out := []string{}
 	var err error
 
 	ip := f()
-	gw := route.DefaultGW()
+	gw := fgw()
 	if gw == "" {
 		return out, fmt.Errorf("no default gateway")
 	}
@@ -60,15 +60,15 @@ func routeAdd(f func() []string) ([]string, error) {
 }
 
 func RouteDelete() ([]string, error) {
-	return routeDelete(ZoomIPs)
+	return routeDelete(ZoomIPs, route.DefaultGW)
 }
 
-func routeDelete(f func() []string) ([]string, error) {
+func routeDelete(f func() []string, fgw func() string) ([]string, error) {
 	out := []string{}
 	var err error
 
 	ip := f()
-	gw := route.DefaultGW()
+	gw := fgw()
 	if gw == "" {
 		return out, fmt.Errorf("no default gateway")
 	}

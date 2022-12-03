@@ -16,7 +16,11 @@ func Test_routeAdd(t *testing.T) {
 		return []string{"34.160.0.0/16"}
 	}
 
-	result, err := routeAdd(mock)
+	mockGW := func() string {
+		return "192.168.1.1"
+	}
+
+	result, err := routeAdd(mock, mockGW)
 	if err != nil {
 		t.Error(err)
 	}
@@ -32,7 +36,11 @@ func Test_routeDelete(t *testing.T) {
 		return []string{"34.160.0.0/16"}
 	}
 
-	result, err := routeDelete(mock)
+	mockGW := func() string {
+		return "192.168.1.1"
+	}
+
+	result, err := routeDelete(mock, mockGW)
 	if err != nil {
 		t.Error(err)
 	}
