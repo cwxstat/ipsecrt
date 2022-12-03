@@ -10,26 +10,21 @@ func MockRun(name string, arg ...string) ([]byte, error) {
 
 Internet:
 Destination        Gateway            Flags           Netif Expire
-default            192.168.1.1        UGScg             en0
-127                127.0.0.1          UCS               lo0
-127.0.0.1          127.0.0.1          UH                lo0
-169.254            link#12            UCS               en0      !
-192.168.1          link#12            UCS               en0      !
-192.168.1.1/32     link#12            UCS               en0      !
-192.168.1.1        20:c0:47:bd:f2:e   UHLWIir           en0   1190
-192.168.1.100      1c:1b:61:a9:b2:51  UHLWIi            en0   1131
-192.168.1.152      70:3a:ca:56:41:78  UHLWI             en0    394
-192.168.1.166      70:3a:ca:bb:41:df  UHLWI             en0      !
-192.168.1.209      f0:b3:ec:1a:2a:2e  UHLWIi            en0      !
-192.168.1.210      d4:90:9d:cd:c0:11  UHLWI             en0    794
-192.168.1.227      90:9c:4b:ce:5f:62  UHLWI             en0      !
-192.168.1.235/32   link#12            UCS               en0      !
-192.168.1.235      9e:3e:51:8e:de:fe  UHLWI             lo0
-192.168.1.255      ff:ff:ff:ff:ff:ff  UHLWbI            en0      !
-224.0.0/4          link#12            UmCS              en0      !
-224.0.0.251        1:0:5e:0:0:fb      UHmLWI            en0
-239.255.255.250    1:0:5e:7f:ff:fa    UHmLWI            en0
-255.255.255.255/32 link#12            UCS               en0      !
+default            link#18            UCSg             ppp0
+default            192.168.1.1        UGScIg            en0
+8.8.8.8            link#18            UHW3Ig           ppp0   3528
+10.10.1.25         link#18            UHWIig           ppp0
+10.10.1.50         link#18            UHWIig           ppp0
+17.248.190.207     link#18            UHW3Ig           ppp0   3561
+17.253.4.253       link#18            UHW3Ig           ppp0   3500
+17.253.16.125      link#18            UHW3Ig           ppp0   3500
+34.160/16          192.168.1.1        UGSc              en0
+52.31.58.3         link#18            UHWIig           ppp0
+54.171.149.88      link#18            UHW3Ig           ppp0   3549
+65.8.158.91        link#18            UHW3Ig           ppp0   3547
+67.23.55.194       192.168.1.1        UGHS              en0
+104.20.232.13      link#18            UHWIig           ppp0
+104.20.233.13      link#18            UHWIig           ppp0
 `), nil
 }
 
@@ -51,5 +46,13 @@ func TestStat(t *testing.T) {
 }
 
 func TestDefaultGW(t *testing.T) {
-	fmt.Println(DefaultGW())
+
+	mock := func() ([][]string, error) {
+		out, err := netStat(MockRun, "/usr/sbin/netstat", "-nr", "-f", "inet")
+		return parseNetStat(out), err
+	}
+
+	gw := defaultGW(mock)
+	fmt.Println(gw)
+
 }

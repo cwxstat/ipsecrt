@@ -17,6 +17,10 @@ nettop -m route
 https://assets.zoom.us/docs/ipranges/Zoom.txt
 
 
+go build -o ipsecrt .
+
+
+
 # Other IPs
 https://stackoverflow.com/questions/9342782/is-there-a-way-to-get-all-ip-addresses-of-youtube-to-block-it-with-windows-firew
 

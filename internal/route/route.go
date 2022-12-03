@@ -53,12 +53,16 @@ func NetStat() ([][]string, error) {
 }
 
 func DefaultGW() string {
-	out, err := NetStat()
+	return defaultGW(NetStat)
+}
+
+func defaultGW(netstat func() ([][]string, error)) string {
+	out, err := netstat()
 	if err != nil {
 		return ""
 	}
 	for _, v := range out {
-		if v[0] == "default" {
+		if v[0] == "default" && !strings.Contains(v[1], "link") {
 			return v[1]
 		}
 	}
