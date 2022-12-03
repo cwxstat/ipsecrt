@@ -1,6 +1,8 @@
 package zoom
 
 import (
+	"fmt"
+	"github.com/cwxstat/ipsecrt/internal/route"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -32,6 +34,52 @@ func Read(rel string) string {
 		return ""
 	}
 	return string(b)
+}
+
+func RouteAdd() ([]string, error) {
+	return routeAdd(ZoomIPs)
+}
+
+func routeAdd(f func() []string) ([]string, error) {
+	out := []string{}
+	var err error
+
+	ip := f()
+	gw := route.DefaultGW()
+	if gw == "" {
+		return out, fmt.Errorf("no default gateway")
+	}
+	for _, v := range ip {
+		if v == "" {
+			err = fmt.Errorf("empty ip")
+			continue
+		}
+		out = append(out, fmt.Sprintf("/sbin/route add %s %s", v, gw))
+	}
+	return out, err
+}
+
+func RouteDelete() ([]string, error) {
+	return routeDelete(ZoomIPs)
+}
+
+func routeDelete(f func() []string) ([]string, error) {
+	out := []string{}
+	var err error
+
+	ip := f()
+	gw := route.DefaultGW()
+	if gw == "" {
+		return out, fmt.Errorf("no default gateway")
+	}
+	for _, v := range ip {
+		if v == "" {
+			err = fmt.Errorf("empty ip")
+			continue
+		}
+		out = append(out, fmt.Sprintf("/sbin/route delete %s %s", v, gw))
+	}
+	return out, err
 }
 
 func ZoomIPs() []string {
