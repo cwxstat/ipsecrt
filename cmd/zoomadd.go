@@ -30,7 +30,8 @@ to quickly create a Cobra application.`,
 		count := 0
 		for _, v := range cmds {
 			c := strings.Fields(v)
-			_, err := route.Run(c[0], c[1:]...)
+			out, err := route.Run(c[0], c[1:]...)
+			fmt.Println(out)
 			if err != nil {
 				fmt.Println(err)
 				continue
