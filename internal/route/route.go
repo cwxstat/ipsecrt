@@ -1,6 +1,7 @@
 package route
 
 import (
+	"fmt"
 	"os/exec"
 	"strings"
 )
@@ -67,4 +68,42 @@ func defaultGW(netstat func() ([][]string, error)) string {
 		}
 	}
 	return ""
+}
+
+func RouteAdd(f func() []string, fgw func() string) ([]string, error) {
+	out := []string{}
+	var err error
+
+	ip := f()
+	gw := fgw()
+	if gw == "" {
+		return out, fmt.Errorf("no default gateway")
+	}
+	for _, v := range ip {
+		if v == "" {
+			err = fmt.Errorf("empty ip")
+			continue
+		}
+		out = append(out, fmt.Sprintf("/sbin/route add %s %s", v, gw))
+	}
+	return out, err
+}
+
+func RouteDelete(f func() []string, fgw func() string) ([]string, error) {
+	out := []string{}
+	var err error
+
+	ip := f()
+	gw := fgw()
+	if gw == "" {
+		return out, fmt.Errorf("no default gateway")
+	}
+	for _, v := range ip {
+		if v == "" {
+			err = fmt.Errorf("empty ip")
+			continue
+		}
+		out = append(out, fmt.Sprintf("/sbin/route delete %s %s", v, gw))
+	}
+	return out, err
 }

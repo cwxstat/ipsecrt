@@ -5,6 +5,10 @@ cobra-cli init
 
 cobra-cli add zoomadd
 cobra-cli add zoomdel
+
+cobra-cli add githubadd
+cobra-cli add githubdel
+
 cobra-cli add version
 
 

@@ -2,6 +2,7 @@ package zoom
 
 import (
 	"fmt"
+	"github.com/cwxstat/ipsecrt/internal/route"
 	"strings"
 	"testing"
 )
@@ -20,7 +21,7 @@ func Test_routeAdd(t *testing.T) {
 		return "192.168.1.1"
 	}
 
-	result, err := routeAdd(mock, mockGW)
+	result, err := route.RouteAdd(mock, mockGW)
 	if err != nil {
 		t.Error(err)
 	}
@@ -40,7 +41,7 @@ func Test_routeDelete(t *testing.T) {
 		return "192.168.1.1"
 	}
 
-	result, err := routeDelete(mock, mockGW)
+	result, err := route.RouteDelete(mock, mockGW)
 	if err != nil {
 		t.Error(err)
 	}
