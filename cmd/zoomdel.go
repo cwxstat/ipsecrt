@@ -31,7 +31,13 @@ to quickly create a Cobra application.`,
 		for _, v := range cmds {
 			c := strings.Fields(v)
 			out, err := route.Run(c[0], c[1:]...)
-			fmt.Println(out)
+			if count < 10 {
+				fmt.Println(v)
+				fmt.Printf("out: %s\n", out)
+			}
+			if count == 11 {
+				fmt.Println("...only first 10 routes are shown")
+			}
 			if err != nil {
 				fmt.Println(err)
 				continue
