@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 )
 
 // basepath is the root directory of this package.
@@ -98,6 +99,10 @@ func githubIPs() []string {
 
 	var ips []string
 	for _, v := range github.Git {
+		// skip ip6 addresses
+		if strings.Contains(v, ":") {
+			continue
+		}
 		ips = append(ips, v)
 	}
 	return ips
