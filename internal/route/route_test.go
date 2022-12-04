@@ -53,6 +53,9 @@ func TestDefaultGW(t *testing.T) {
 	}
 
 	gw := defaultGW(mock)
+	if gw != "192.168.1.1" {
+		t.Error("defaultGW", gw)
+	}
 	fmt.Println(gw)
 
 }
