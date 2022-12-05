@@ -26,6 +26,15 @@ These are common commands:
    netstat -nr -f inet
    nettop -m route
 
+   man pppd
+   man route
+   cat /var/log/ppp.log
+
+# Send local traffic to gateway
+
+route add 192.168.0.0/16 192.168.1.1
+   
+
 
 `
 		fmt.Println(msg)
